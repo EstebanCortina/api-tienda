@@ -24,6 +24,10 @@ provider:
   name: aws
   runtime: python3.9
 
+plugins:
+  - serverless-offline
+  - serverless-plugin-include-dependencies
+
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
@@ -60,11 +64,11 @@ provider:
 
 functions:
   hello:
-     handler: handler.hello
+     handler: wsgi.lambda_handler
      events:
        - http:
-           path: hola-mundo
-           method: get
+           path: /{proxy+}
+           method: ANY
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
