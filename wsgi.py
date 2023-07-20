@@ -1,5 +1,3 @@
-# wsgi.py
-
 from app import app
 from serverless_wsgi import handle_request
 
