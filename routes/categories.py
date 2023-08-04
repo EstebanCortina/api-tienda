@@ -13,9 +13,10 @@ def get_categories():
     mysqlConn.close()
     return categories
 
+
 @categories_bp.route('/categories/<int:id>', methods=['POST'])
 def post_categories(id):
-    if(request.is_json):
+    if (request.is_json):
         data = request.get_json()
         name = data.get('name')
         description = data.get('description')
@@ -32,11 +33,11 @@ def post_categories(id):
         try:
             cursor.execute(query)
             mysqlConn.commit()
-            return jsonify({'message':'categoria insertada'}), 200
+            return jsonify({'message': 'categoria insertada'}), 200
         except Exception as e:
             print(e)
             mysqlConn.rollback()
-            return jsonify({'message':'Error categoria no insertada'}), 400
+            return jsonify({'message': 'Error categoria no insertada'}), 400
         finally:
             cursor.close()
             mysqlConn.close()
@@ -56,40 +57,42 @@ def post_categories(id):
         try:
             cursor.execute(query)
             mysqlConn.commit()
-            return jsonify({'message':'categoria insertada'}), 200
+            return jsonify({'message': 'categoria insertada'}), 200
         except Exception as e:
             print(e)
             mysqlConn.rollback()
-            return jsonify({'message':'Error categoria no insertada'}), 400
+            return jsonify({'message': 'Error categoria no insertada'}), 400
         finally:
             cursor.close()
             mysqlConn.close()
+
 
 @categories_bp.route('/categories/<int:id>', methods=['DELETE'])
 def delete_categories(id):
     mysqlConn = get_connection()
     cursor = mysqlConn.cursor()
-    query=f'''
+    query = f'''
     DELETE FROM categories WHERE id={id}
     '''
     try:
         cursor.execute(query)
         mysqlConn.commit()
-        return jsonify({'message':f'categoria {id} eliminada'}), 200
+        return jsonify({'message': f'categoria {id} eliminada'}), 200
     except Exception as e:
         print(e)
         mysqlConn.rollback()
-        return jsonify({'message':'Error categoria no eliminada'}), 400
+        return jsonify({'message': 'Error categoria no eliminada'}), 400
     finally:
         cursor.close()
         mysqlConn.close()
 
+
 @categories_bp.route('/categories/<int:id>', methods=['PUT'])
 def put_categories(id):
-    if(request.is_json):
+    if (request.is_json):
         data = request.get_json()
         name = data.get('name')
-        description = data.get('description')        
+        description = data.get('description')
         mysqlConn = get_connection()
         cursor = mysqlConn.cursor()
         query = f'''
@@ -101,17 +104,17 @@ def put_categories(id):
         try:
             cursor.execute(query)
             mysqlConn.commit()
-            return jsonify({'message':'categoria insertada'}), 200
+            return jsonify({'message': 'categoria insertada'}), 200
         except Exception as e:
             print(e)
             mysqlConn.rollback()
-            return jsonify({'message':'Error categoria no insertada'}), 400
+            return jsonify({'message': 'Error categoria no insertada'}), 400
         finally:
             cursor.close()
             mysqlConn.close()
     else:
         name = request.form.get('name')
-        description = request.form.get('description')        
+        description = request.form.get('description')
         mysqlConn = get_connection()
         cursor = mysqlConn.cursor()
         query = f'''
@@ -124,11 +127,11 @@ def put_categories(id):
         try:
             cursor.execute(query)
             mysqlConn.commit()
-            return jsonify({'message':'categoria actualizada'}), 200
+            return jsonify({'message': 'categoria actualizada'}), 200
         except Exception as e:
             print(e)
             mysqlConn.rollback()
-            return jsonify({'message':'Error categoria no actualizada'}), 400
+            return jsonify({'message': 'Error categoria no actualizada'}), 400
         finally:
             cursor.close()
             mysqlConn.close()
